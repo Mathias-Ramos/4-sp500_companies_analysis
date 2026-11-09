@@ -8,3 +8,6 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Other files
+snowflake_account.txt

@@ -10,4 +10,5 @@ wheels/
 .venv
 
 # Other files
-snowflake_account.txt
+.env
+.vscode

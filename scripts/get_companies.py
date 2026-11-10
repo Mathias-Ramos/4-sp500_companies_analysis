@@ -17,5 +17,5 @@ companies = table[["Symbol", "Security", "GICS Sector", "GICS Sub-Industry"]].co
 companies.columns = ["ticker", "name", "sector", "industry"]
 companies["ticker"] = companies["ticker"].str.replace(".", "-", regex=False)
 
-companies.to_csv("companies.csv", index=False, encoding="utf-8-sig")
+companies.to_csv("data/raw/companies.csv", index=False, encoding="utf-8-sig")
 print(f"{len(companies)} companies -> companies.csv")

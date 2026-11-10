@@ -62,10 +62,10 @@ sources:
           loaded_at_field: date::timestamp
           freshness:
             warn_after:
-              count: 60
+              count: 90
               period: day
             error_after:
-              count: 90
+              count: 180
               period: day
         columns:
           - name: ticker
@@ -91,10 +91,10 @@ sources:
           loaded_at_field: date::timestamp
           freshness:
             warn_after:
-              count: 60
+              count: 90
               period: day
             error_after:
-              count: 90
+              count: 180
               period: day
         columns:
           - name: ticker

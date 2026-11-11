@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: stg_balance_sheet
+    description: "Annual balance sheet items per company."
+    columns:
+      - name: ticker
+        description: "Stock market symbol."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_companies')
+                field: ticker
+      - name: date
+        description: "Fiscal period end date."
+        data_tests:
+          - not_null
+      - name: total_debt
+        description: "Total debt (USD)."
+      - name: cash_and_equivalents
+        description: "Cash and cash equivalents (USD)."
+      - name: stockholders_equity
+        description: "Stockholders' equity (USD)."

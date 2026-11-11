@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: stg_income_stmt
+    description: "Annual income statement items per company."
+    columns:
+      - name: ticker
+        description: "Stock market symbol."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_companies')
+                field: ticker
+      - name: date
+        description: "Fiscal period end date."
+        data_tests:
+          - not_null
+      - name: revenue
+        description: "Total revenue (USD)."
+      - name: ebit
+        description: "Operating income / EBIT (USD)."
+      - name: ebitda
+        description: "Earnings before interest, taxes, depreciation and amortization (USD)."
+      - name: tax_provision
+        description: "Income tax provision (USD)."
+      - name: pretax_income
+        description: "Pre-tax income (USD)."
+      - name: net_income
+        description: "Net income (USD)."
+      - name: diluted_eps
+        description: "Diluted earnings per share (USD)."

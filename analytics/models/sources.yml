@@ -1,7 +1,7 @@
 version: 2
 
 sources:
-  - name: sp500
+  - name: raw
     description: "Raw S&P 500 data scraped with yfinance, loaded into Snowflake from S3."
     schema: STAGING
     tables:
@@ -43,7 +43,7 @@ sources:
               - not_null
               - relationships:
                   arguments:
-                    to: source('sp500', 'companies')
+                    to: source('raw', 'companies')
                     field: ticker
           - name: date
             description: "Fiscal period end date."
@@ -74,7 +74,7 @@ sources:
               - not_null
               - relationships:
                   arguments:
-                    to: source('sp500', 'companies')
+                    to: source('raw', 'companies')
                     field: ticker
           - name: date
             description: "Fiscal period end date."
@@ -103,7 +103,7 @@ sources:
               - not_null
               - relationships:
                   arguments:
-                    to: source('sp500', 'companies')
+                    to: source('raw', 'companies')
                     field: ticker
           - name: date
             description: "Fiscal period end date."
@@ -142,7 +142,7 @@ sources:
               - not_null
               - relationships:
                   arguments:
-                    to: source('sp500', 'companies')
+                    to: source('raw', 'companies')
                     field: ticker
           - name: date
             description: "Week start date."
@@ -193,7 +193,7 @@ sources:
               - not_null
               - relationships:
                   arguments:
-                    to: source('sp500', 'companies')
+                    to: source('raw', 'companies')
                     field: ticker
           - name: period
             description: "Future fiscal period code (e.g. 0q, +1q, 0y)."
@@ -229,7 +229,7 @@ sources:
               - not_null
               - relationships:
                   arguments:
-                    to: source('sp500', 'companies')
+                    to: source('raw', 'companies')
                     field: ticker
           - name: period
             description: "Future fiscal period code (e.g. 0q, +1q, 0y)."
@@ -261,7 +261,7 @@ sources:
               - not_null
               - relationships:
                   arguments:
-                    to: source('sp500', 'companies')
+                    to: source('raw', 'companies')
                     field: ticker
           - name: period
             description: "Future fiscal period code (e.g. 0q, +1q, 0y)."
@@ -295,7 +295,7 @@ sources:
               - not_null
               - relationships:
                   arguments:
-                    to: source('sp500', 'companies')
+                    to: source('raw', 'companies')
                     field: ticker
           - name: period
             description: "Future fiscal period code (e.g. 0q, +1q, 0y)."

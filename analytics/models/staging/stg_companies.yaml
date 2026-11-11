@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: stg_companies
+    description: "One row per S&P 500 constituent (reference table)."
+    columns:
+      - name: ticker
+        description: "Stock market symbol."
+        data_tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Company name."
+        data_tests:
+          - not_null
+      - name: sector
+        description: "GICS sector."
+        data_tests:
+          - not_null
+      - name: industry
+        description: "GICS industry."

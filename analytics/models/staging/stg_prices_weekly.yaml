@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: stg_prices_weekly
+    description: "Weekly stock prices per company."
+    columns:
+      - name: ticker
+        description: "Stock market symbol."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_companies')
+                field: ticker
+      - name: date
+        description: "Week start date."
+        data_tests:
+          - not_null
+      - name: adj_close
+        description: "Split- and dividend-adjusted closing price (USD)."

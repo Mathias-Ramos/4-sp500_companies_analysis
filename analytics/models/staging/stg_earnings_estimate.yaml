@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: stg_earnings_estimate
+    description: "Analyst EPS estimates per company and future period."
+    columns:
+      - name: ticker
+        description: "Stock market symbol."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_companies')
+                field: ticker
+      - name: period
+        description: "Future fiscal period code (e.g. 0q, +1q, 0y)."
+        data_tests:
+          - not_null
+      - name: avg
+        description: "Average estimated EPS."
+      - name: low
+        description: "Lowest estimated EPS."
+      - name: high
+        description: "Highest estimated EPS."
+      - name: year_ago_eps
+        description: "Actual EPS one year ago."
+      - name: number_of_analysts
+        description: "Number of contributing analysts."
+      - name: growth
+        description: "Year-over-year growth."
+      - name: currency
+        description: "Reporting currency."
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['USD']
+      - name: methodology
+        description: "Estimate methodology (e.g. adjusted, normalized)."

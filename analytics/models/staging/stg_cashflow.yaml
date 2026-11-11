@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: stg_cashflow
+    description: "Annual cash flow items per company."
+    columns:
+      - name: ticker
+        description: "Stock market symbol."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_companies')
+                field: ticker
+      - name: date
+        description: "Fiscal period end date."
+        data_tests:
+          - not_null
+      - name: operating_cash_flow
+        description: "Operating cash flow (USD)."
+      - name: capital_expenditure
+        description: "Capital expenditure (USD, negative for outflows)."

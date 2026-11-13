@@ -1,0 +1,68 @@
+version: 2
+
+models:
+  - name: stg_analyst_estimates
+    description: "One row per company and future period with analyst EPS estimates, revenue estimates, EPS estimate trend and revisions."
+    columns:
+      - name: ticker
+        description: "Stock market symbol."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_companies')
+                field: ticker
+      - name: period
+        description: "Future fiscal period code (e.g. 0q, +1q, 0y)."
+        data_tests:
+          - not_null
+      - name: eps_avg
+        description: "Average estimated EPS."
+      - name: eps_low
+        description: "Lowest estimated EPS."
+      - name: eps_high
+        description: "Highest estimated EPS."
+      - name: eps_year_ago
+        description: "Actual EPS one year ago."
+      - name: eps_number_of_analysts
+        description: "Number of contributing analysts for EPS."
+      - name: eps_growth
+        description: "Year-over-year EPS growth."
+      - name: revenue_avg
+        description: "Average estimated revenue (USD)."
+      - name: revenue_low
+        description: "Lowest estimated revenue (USD)."
+      - name: revenue_high
+        description: "Highest estimated revenue (USD)."
+      - name: revenue_year_ago
+        description: "Actual revenue one year ago (USD)."
+      - name: revenue_number_of_analysts
+        description: "Number of contributing analysts for revenue."
+      - name: revenue_growth
+        description: "Year-over-year revenue growth."
+      - name: trend_current
+        description: "Current EPS estimate."
+      - name: trend_7_days_ago
+        description: "EPS estimate 7 days ago."
+      - name: trend_30_days_ago
+        description: "EPS estimate 30 days ago."
+      - name: trend_60_days_ago
+        description: "EPS estimate 60 days ago."
+      - name: trend_90_days_ago
+        description: "EPS estimate 90 days ago."
+      - name: up_last_7_days
+        description: "Upward EPS revisions in the last 7 days."
+      - name: up_last_30_days
+        description: "Upward EPS revisions in the last 30 days."
+      - name: down_last_30_days
+        description: "Downward EPS revisions in the last 30 days."
+      - name: down_last_7_days
+        description: "Downward EPS revisions in the last 7 days."
+      - name: currency
+        description: "Reporting currency."
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['USD']
+      - name: methodology
+        description: "Estimate methodology (e.g. adjusted, normalized)."

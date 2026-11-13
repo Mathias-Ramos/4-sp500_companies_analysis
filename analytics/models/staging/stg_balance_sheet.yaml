@@ -22,3 +22,11 @@ models:
         description: "Cash and cash equivalents (USD)."
       - name: stockholders_equity
         description: "Stockholders' equity (USD)."
+      - name: invested_capital
+        description: "Invested capital (USD, pre-calculated by yfinance). Used for ROIC."
+      - name: net_debt
+        description: "Net debt (USD, pre-calculated by yfinance). Used for Net Debt / EBITDA."
+      - name: total_assets
+        description: "Total assets (USD). Additional financial analysis."
+      - name: cash_and_short_term_investments
+        description: "Cash and cash equivalents plus short-term investments (USD). Alternative cash measure."

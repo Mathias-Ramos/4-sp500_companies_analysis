@@ -11,19 +11,20 @@ sources:
         columns:
           - name: ticker
             description: "Stock market symbol."
-            data_tests:
-              - unique
-              - not_null
           - name: name
             description: "Company name."
-            data_tests:
-              - not_null
           - name: sector
             description: "GICS sector."
-            data_tests:
-              - not_null
           - name: industry
             description: "GICS industry."
+          - name: country
+            description: "Country of the company's headquarters."
+          - name: currency
+            description: "Reporting currency."
+          - name: market_cap
+            description: "Current market capitalization (USD)."
+          - name: ttm_ebitda
+            description: "Trailing twelve months EBITDA (USD)."
 
       - name: balance_sheet
         description: "Annual balance sheet items per company."
@@ -39,22 +40,22 @@ sources:
         columns:
           - name: ticker
             description: "Stock market symbol."
-            data_tests:
-              - not_null
-              - relationships:
-                  arguments:
-                    to: source('raw', 'companies')
-                    field: ticker
           - name: date
             description: "Fiscal period end date."
-            data_tests:
-              - not_null
           - name: total_debt
             description: "Total debt (USD)."
           - name: cash_and_equivalents
             description: "Cash and cash equivalents (USD)."
           - name: stockholders_equity
             description: "Stockholders' equity (USD)."
+          - name: invested_capital
+            description: "Invested capital (USD, pre-calculated by yfinance). Used for ROIC."
+          - name: net_debt
+            description: "Net debt (USD, pre-calculated by yfinance). Used for Net Debt / EBITDA."
+          - name: total_assets
+            description: "Total assets (USD). Additional financial analysis."
+          - name: cash_and_short_term_investments
+            description: "Cash and cash equivalents plus short-term investments (USD). Alternative cash measure."
 
       - name: cashflow
         description: "Annual cash flow items per company."
@@ -70,16 +71,8 @@ sources:
         columns:
           - name: ticker
             description: "Stock market symbol."
-            data_tests:
-              - not_null
-              - relationships:
-                  arguments:
-                    to: source('raw', 'companies')
-                    field: ticker
           - name: date
             description: "Fiscal period end date."
-            data_tests:
-              - not_null
           - name: operating_cash_flow
             description: "Operating cash flow (USD)."
           - name: capital_expenditure
@@ -99,16 +92,8 @@ sources:
         columns:
           - name: ticker
             description: "Stock market symbol."
-            data_tests:
-              - not_null
-              - relationships:
-                  arguments:
-                    to: source('raw', 'companies')
-                    field: ticker
           - name: date
             description: "Fiscal period end date."
-            data_tests:
-              - not_null
           - name: revenue
             description: "Total revenue (USD)."
           - name: ebit
@@ -125,7 +110,7 @@ sources:
             description: "Diluted earnings per share (USD)."
 
       - name: prices_weekly
-        description: "Weekly stock prices per company."
+        description: "Weekly stock prices merged with historical valuation measures (forward-filled from monthly/quarterly measure dates)."
         config:
           loaded_at_field: date::timestamp
           freshness:
@@ -138,184 +123,79 @@ sources:
         columns:
           - name: ticker
             description: "Stock market symbol."
-            data_tests:
-              - not_null
-              - relationships:
-                  arguments:
-                    to: source('raw', 'companies')
-                    field: ticker
           - name: date
             description: "Week start date."
-            data_tests:
-              - not_null
           - name: adj_close
             description: "Split- and dividend-adjusted closing price (USD)."
-
-      - name: financials
-        description: "One row per company with current valuation and profitability metrics."
-        columns:
-          - name: ticker
-            description: "Stock market symbol."
-            data_tests:
-              - unique
-              - not_null
-          - name: pe
+          - name: market_cap
+            description: "Market capitalization (USD)."
+          - name: enterprise_value
+            description: "Enterprise value (USD)."
+          - name: trailing_pe
             description: "Trailing P/E ratio."
           - name: forward_pe
             description: "Forward P/E ratio."
-          - name: ebitda
-            description: "EBITDA (USD)."
-          - name: sector
-            description: "GICS sector."
-            data_tests:
-              - not_null:
-                  config:
-                    severity: warn
-          - name: industry
-            description: "GICS industry."
-            data_tests:
-              - not_null:
-                  config:
-                    severity: warn
-          - name: currency
-            description: "Reporting currency."
-            data_tests:
-              - not_null
-          - name: market_cap
-            description: "Market capitalization (USD)."
+          - name: peg_ratio
+            description: "PEG ratio (5 year expected)."
+          - name: price_sales
+            description: "Price to sales ratio."
+          - name: price_book
+            description: "Price to book ratio."
+          - name: ev_revenue
+            description: "Enterprise value to revenue ratio."
+          - name: ev_ebitda
+            description: "Enterprise value to EBITDA ratio."
 
-      - name: earnings_estimate
-        description: "Analyst EPS estimates per company and future period."
+      - name: analyst_estimates
+        description: "One row per company and future period with analyst EPS estimates, revenue estimates, EPS estimate trend and revisions."
         columns:
           - name: ticker
             description: "Stock market symbol."
-            data_tests:
-              - not_null
-              - relationships:
-                  arguments:
-                    to: source('raw', 'companies')
-                    field: ticker
           - name: period
             description: "Future fiscal period code (e.g. 0q, +1q, 0y)."
-            data_tests:
-              - not_null
-          - name: avg
+          - name: eps_avg
             description: "Average estimated EPS."
-          - name: low
+          - name: eps_low
             description: "Lowest estimated EPS."
-          - name: high
+          - name: eps_high
             description: "Highest estimated EPS."
-          - name: year_ago_eps
+          - name: eps_year_ago
             description: "Actual EPS one year ago."
-          - name: number_of_analysts
-            description: "Number of contributing analysts."
-          - name: growth
-            description: "Year-over-year growth."
-          - name: currency
-            description: "Reporting currency."
-            data_tests:
-              - accepted_values:
-                  arguments:
-                    values: ['USD']
-          - name: methodology
-            description: "Estimate methodology (e.g. adjusted, normalized)."
-
-      - name: eps_revisions
-        description: "Recent EPS revision counts per company and period."
-        columns:
-          - name: ticker
-            description: "Stock market symbol."
-            data_tests:
-              - not_null
-              - relationships:
-                  arguments:
-                    to: source('raw', 'companies')
-                    field: ticker
-          - name: period
-            description: "Future fiscal period code (e.g. 0q, +1q, 0y)."
-            data_tests:
-              - not_null
-          - name: up_last_7_days
-            description: "Upward revisions in the last 7 days."
-          - name: up_last_30_days
-            description: "Upward revisions in the last 30 days."
-          - name: down_last_30_days
-            description: "Downward revisions in the last 30 days."
-          - name: down_last_7_days
-            description: "Downward revisions in the last 7 days."
-          - name: currency
-            description: "Reporting currency."
-            data_tests:
-              - accepted_values:
-                  arguments:
-                    values: ['USD']
-          - name: methodology
-            description: "Estimate methodology (e.g. adjusted, normalized)."
-
-      - name: eps_trend
-        description: "EPS estimate evolution over trailing 90 days per company and period."
-        columns:
-          - name: ticker
-            description: "Stock market symbol."
-            data_tests:
-              - not_null
-              - relationships:
-                  arguments:
-                    to: source('raw', 'companies')
-                    field: ticker
-          - name: period
-            description: "Future fiscal period code (e.g. 0q, +1q, 0y)."
-            data_tests:
-              - not_null
-          - name: current
-            description: "Current estimate."
-          - name: days_7_ago
-            description: "Estimate 7 days ago."
-          - name: days_30_ago
-            description: "Estimate 30 days ago."
-          - name: days_60_ago
-            description: "Estimate 60 days ago."
-          - name: days_90_ago
-            description: "Estimate 90 days ago."
-          - name: currency
-            description: "Reporting currency."
-            data_tests:
-              - accepted_values:
-                  arguments:
-                    values: ['USD']
-          - name: methodology
-            description: "Estimate methodology (e.g. adjusted, normalized)."
-
-      - name: revenue_estimate
-        description: "Analyst revenue estimates per company and future period."
-        columns:
-          - name: ticker
-            description: "Stock market symbol."
-            data_tests:
-              - not_null
-              - relationships:
-                  arguments:
-                    to: source('raw', 'companies')
-                    field: ticker
-          - name: period
-            description: "Future fiscal period code (e.g. 0q, +1q, 0y)."
-            data_tests:
-              - not_null
-          - name: avg
+          - name: eps_number_of_analysts
+            description: "Number of contributing analysts for EPS."
+          - name: eps_growth
+            description: "Year-over-year EPS growth."
+          - name: revenue_avg
             description: "Average estimated revenue (USD)."
-          - name: low
+          - name: revenue_low
             description: "Lowest estimated revenue (USD)."
-          - name: high
+          - name: revenue_high
             description: "Highest estimated revenue (USD)."
-          - name: number_of_analysts
-            description: "Number of contributing analysts."
-          - name: year_ago_revenue
+          - name: revenue_year_ago
             description: "Actual revenue one year ago (USD)."
-          - name: growth
-            description: "Year-over-year growth."
+          - name: revenue_number_of_analysts
+            description: "Number of contributing analysts for revenue."
+          - name: revenue_growth
+            description: "Year-over-year revenue growth."
+          - name: trend_current
+            description: "Current EPS estimate."
+          - name: trend_7_days_ago
+            description: "EPS estimate 7 days ago."
+          - name: trend_30_days_ago
+            description: "EPS estimate 30 days ago."
+          - name: trend_60_days_ago
+            description: "EPS estimate 60 days ago."
+          - name: trend_90_days_ago
+            description: "EPS estimate 90 days ago."
+          - name: up_last_7_days
+            description: "Upward EPS revisions in the last 7 days."
+          - name: up_last_30_days
+            description: "Upward EPS revisions in the last 30 days."
+          - name: down_last_30_days
+            description: "Downward EPS revisions in the last 30 days."
+          - name: down_last_7_days
+            description: "Downward EPS revisions in the last 7 days."
           - name: currency
             description: "Reporting currency."
-            data_tests:
-              - accepted_values:
-                  arguments:
-                    values: ['USD']
+          - name: methodology
+            description: "Estimate methodology (e.g. adjusted, normalized)."

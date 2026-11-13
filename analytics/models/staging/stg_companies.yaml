@@ -19,3 +19,15 @@ models:
           - not_null
       - name: industry
         description: "GICS industry."
+      - name: country
+        description: "Country of the company's headquarters."
+      - name: currency
+        description: "Reporting currency."
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['USD']
+      - name: market_cap
+        description: "Current market capitalization (USD)."
+      - name: ttm_ebitda
+        description: "Trailing twelve months EBITDA (USD)."

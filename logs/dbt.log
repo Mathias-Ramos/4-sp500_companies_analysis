@@ -1,0 +1,9 @@
+==================== 2026-11-13T10:15:29.986131Z | 01a1d467-b9c0-7001-b5d2-a9dfd6f584c3 ====================
+10:15:29.986488 [error]: [Generic (dbt1000)]: dbt docs serve: no data to serve
+
+Information schema not found: ./target/info_schema/v1
+Run `dbt build` or `dbt docs generate` to write it,
+or pass `--target-path <DIR>` pointing at a directory that contains it.
+10:15:30.087154 [info ]: 
+==================== Execution Summary =====================
+Finished 'docs' with 1 error [101ms]

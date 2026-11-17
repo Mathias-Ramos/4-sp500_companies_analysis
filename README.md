@@ -29,6 +29,8 @@
   <strong>Transformer les données financières brutes en un score d'investissement fiable, comparable et exploitable — de l'extraction à l'aide à la décision.</strong>
 </p>
 
+> ⚠️ **Avertissement** : ce projet est un exercice d'analytics engineering à but éducatif et démonstratif. Il ne constitue **pas un conseil en investissement** et ne doit pas être utilisé comme base pour des décisions d'investissement réelles. Aucune garantie n'est donnée sur l'exactitude ou la complétude des données.
+
 ## 🎯 Contexte & objectif
 
 Évaluer ~500 entreprises cotées à la main n'est ni fiable ni reproductible : chaque investisseur regarde quelques ratios isolés, sans cadre de comparaison homogène au sein d'une même industrie.
@@ -65,7 +67,6 @@ Objectif métier : répondre à *« où se situe cette entreprise par rapport à
 | Entrepôt de données | **Snowflake** | Environnement analytique (staging → transformations) |
 | Transformation | **dbt** (Fusion) | Modélisation SQL, tests, documentation |
 | BI / visualisation | **Power BI** | Tableau de bord interactif de scoring |
-| Écosystème Python | **uv** | Gestion des dépendances et de l'environnement |
 | Contrôle de version | **Git / GitHub** | Gestion du code source et documentation |
 
 ## 🏗️ Architecture du pipeline
@@ -123,7 +124,7 @@ WIKIPEDIA (S&P 500)   YAHOO FINANCE API
 2. **Charger** : déposer les CSV dans un bucket S3, puis les ingérer dans Snowflake (`COPY INTO` sur un stage S3, schéma `STAGING`).
 3. **Transformer** (dbt) :
    - calculer les KPIs par entreprise : P/E trailing & forward, Net Debt / EBITDA, ROIC *(NOPAT / capital investi)*, FCF / Net Income, EPS CAGR 3 ans ;
-   - construire un **trend score** technique : position vs moyenne mobile 50 semaines, bonus bullish, pénalité par clôture baissière consécutive, bonus de proximité à la SMA ;
+   - construire un **trend score** technique : position vs moyenne mobile 50 semaines, bonus si tendance à la hausse, pénalité par clôture baissière consécutive, bonus de proximité à la SMA ;
    - scorer chaque KPI de 0 à 100 via `PERCENT_RANK()`, en normalisant les P/E par la médiane de l'industrie avant scoring.
 4. **Agréger** : combiner les scores par catégorie avec des pondérations fixes en un score d'investissement global.
 5. **Restituer** : alimenter un dashboard Power BI orienté décision.
@@ -217,13 +218,10 @@ cd analytics && dbt build
 # 5. Dashboard : connecter Power BI aux marts Snowflake
 ```
 
-## ⚠️ Limites & prochaines étapes
+## ⏩ Prochaines étapes
 
-- **Fraîcheur des données** : les sources yfinance fournissent des historiques annuels ; les KPIs reflètent le dernier exercice connu. Ajouter des tests de fraîcheur dbt (déjà amorcés sur `balance_sheet`) pour toutes les sources.
-- **Tests & qualité** : étendre les tests dbt (unicité des tickers, valeurs non négatives, nulls critiques) et les prédicats sur le scoring.
 - **Scoring** : faire évoluer les pondérations fixes vers une calibration backtestée, et étudier l'ajout de facteurs qualitatifs.
-- **Orchestration** : industrialiser la chaîne complète (collecte → load → dbt → refresh Power BI) avec un scheduler.
-- **Distribution** : version web du dashboard (Power BI Service) et exports d'alertes (entrées/sorties de Top N par industrie).
+- **Orchestration** : industrialiser la chaîne complète (collecte → load → dbt → refresh Power BI) avec Airflow.
 
 ## 👋 À propos de moi
 
@@ -251,6 +249,8 @@ Vous pouvez retrouver d'autres projets dans mon **[Portfolio](https://github.com
 <p align="center">
   <strong>Turning raw financial data into a reliable, comparable and actionable investment score — from extraction to decision support.</strong>
 </p>
+
+> ⚠️ **Disclaimer**: this project is an educational, demonstration-oriented analytics engineering exercise. It does **not constitute investment advice** and must not be used as a basis for real investment decisions. No guarantee is given regarding the accuracy or completeness of the data.
 
 ## 🎯 Context & objective
 
@@ -440,13 +440,10 @@ cd analytics && dbt build
 # 5. Dashboard: connect Power BI to the Snowflake marts
 ```
 
-## ⚠️ Limitations & next steps
+## ⏩ Limitations & next steps
 
-- **Data freshness**: yfinance sources provide annual histories; KPIs reflect the latest known fiscal year. Extend dbt freshness tests (already seeded on `balance_sheet`) to all sources.
-- **Tests & quality**: expand dbt tests (ticker uniqueness, non-negative values, critical nulls) and scoring constraints.
 - **Scoring**: move from fixed weights to backtested calibration, and study adding qualitative factors.
-- **Orchestration**: productionize the full chain (collect → load → dbt → Power BI refresh) with a scheduler.
-- **Distribution**: web version of the dashboard (Power BI Service) and alert exports (industry Top N entries/exits).
+- **Orchestration**: productionize the full chain (collect → load → dbt → Power BI refresh) with Airflow.
 
 ## 👋 About me
 

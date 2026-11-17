@@ -3,11 +3,27 @@ version: 2
 models:
   - name: mart_peers
     description: "Mart listing peer companies within the same sector as a selected company, with the KPIs used for peer comparison."
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [ticker, peer_ticker]
     columns:
       - name: ticker
         description: "The stock ticker symbol of the selected company."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_companies')
+                field: ticker
       - name: peer_ticker
         description: "The stock ticker symbol of the peer company."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_companies')
+                field: ticker
       - name: peer_name
         description: "The name of the peer company."
       - name: peer_industry
@@ -20,3 +36,5 @@ models:
         description: "Free cash flow of the peer company, floored at zero, used as bubble size in charts."
       - name: is_selected
         description: "Boolean flag indicating whether the peer is the selected company itself."
+        data_tests:
+          - not_null

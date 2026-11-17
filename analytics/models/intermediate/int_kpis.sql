@@ -123,8 +123,7 @@ SELECT
     CASE
         WHEN is_.diluted_eps > 0 AND e3.diluted_eps > 0
         THEN ROUND(POWER(is_.diluted_eps / e3.diluted_eps, 1.0 / 3) - 1, 4)
-    END AS eps_cagr_3y,
-    
+    END AS eps_cagr_3y
 
 FROM {{ ref('stg_companies') }} AS c
 LEFT JOIN latest_valuation AS v

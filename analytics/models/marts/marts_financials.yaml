@@ -3,13 +3,30 @@ version: 2
 models:
   - name: marts_financials
     description: "Mart exposing yearly income statement figures per company."
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [ticker, date]
     columns:
       - name: ticker
         description: "The stock ticker symbol of the company."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_companies')
+                field: ticker
       - name: date
         description: "The date of the fiscal period."
+        data_tests:
+          - not_null
       - name: fiscal_year
         description: "The fiscal year derived from the period date."
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 1900
+                inclusive: true
       - name: revenue
         description: "Total revenue for the fiscal year."
       - name: net_income

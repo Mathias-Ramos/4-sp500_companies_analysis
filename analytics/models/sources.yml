@@ -21,10 +21,6 @@ sources:
             description: "Country of the company's headquarters."
           - name: currency
             description: "Reporting currency."
-          - name: market_cap
-            description: "Current market capitalization (USD)."
-          - name: ttm_ebitda
-            description: "Trailing twelve months EBITDA (USD)."
 
       - name: balance_sheet
         description: "Annual balance sheet items per company."
@@ -109,8 +105,8 @@ sources:
           - name: diluted_eps
             description: "Diluted earnings per share (USD)."
 
-      - name: prices_weekly
-        description: "Weekly stock prices merged with historical valuation measures (forward-filled from monthly/quarterly measure dates)."
+      - name: prices_daily
+        description: "Daily stock prices."
         config:
           loaded_at_field: date::timestamp
           freshness:
@@ -124,9 +120,26 @@ sources:
           - name: ticker
             description: "Stock market symbol."
           - name: date
-            description: "Week start date."
-          - name: adj_close
-            description: "Split- and dividend-adjusted closing price (USD)."
+            description: "Trading date."
+          - name: rounded_close
+            description: "Split- and dividend-adjusted closing price, rounded to 2 decimals (USD)."
+
+      - name: metrics
+        description: "Historical valuation measures per company (forward-filled from monthly/quarterly measure dates)."
+        config:
+          loaded_at_field: date::timestamp
+          freshness:
+            warn_after:
+              count: 14
+              period: day
+            error_after:
+              count: 60
+              period: day
+        columns:
+          - name: ticker
+            description: "Stock market symbol."
+          - name: date
+            description: "Valuation measure date."
           - name: market_cap
             description: "Market capitalization (USD)."
           - name: enterprise_value
@@ -145,6 +158,25 @@ sources:
             description: "Enterprise value to revenue ratio."
           - name: ev_ebitda
             description: "Enterprise value to EBITDA ratio."
+
+      - name: ttm_eps
+        description: "Trailing twelve-month earnings per share per company (one row per company and quarter-end date)."
+        config:
+          loaded_at_field: date::timestamp
+          freshness:
+            warn_after:
+              count: 60
+              period: day
+            error_after:
+              count: 90
+              period: day
+        columns:
+          - name: ticker
+            description: "Stock market symbol."
+          - name: date
+            description: "Quarter-end date for the trailing twelve-month period."
+          - name: ttm_eps
+            description: "Trailing twelve-month diluted earnings per share (USD)."
 
       - name: analyst_estimates
         description: "One row per company and future period with analyst EPS estimates, revenue estimates, EPS estimate trend and revisions."

@@ -4,8 +4,6 @@ SELECT
     sector,
     industry,
     country,
-    currency,
-    market_cap,
-    ttm_ebitda
+    currency
 FROM {{ source('raw', 'companies') }}
 WHERE ticker IS NOT NULL

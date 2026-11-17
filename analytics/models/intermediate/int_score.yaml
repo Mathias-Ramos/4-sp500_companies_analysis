@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: int_score
+    description: "Intermediate model to compute a score for S&P 500 companies based on valuation, financial strength, technical trend, earnings quality, and earnings growth."
+    columns:
+      - name: ticker
+        description: "The stock ticker symbol of the company."
+      - name: name
+        description: "The name of the company."
+      - name: sector
+        description: "The sector to which the company belongs."
+      - name: industry
+        description: "The industry to which the company belongs."
+      - name: investment_score
+        description: "Overall investment score based on valuation, financial strength, technical trend, earnings quality, and earnings growth."
+      - name: score_trailing_pe
+        description: "Score for trailing P/E ratio."
+      - name: score_forward_pe
+        description: "Score for forward P/E ratio."
+      - name: score_pe
+        description: "Combined P/E score, the average of score_trailing_pe and score_forward_pe."
+      - name: score_trend
+        description: "Score for technical trend (0-100), taken from int_trend.trend_score on the latest date."
+      - name: score_net_debt
+        description: "Score for net debt to EBITDA ratio."
+      - name: score_roic
+        description: "Score for return on invested capital."
+      - name: score_earnings_quality
+        description: "Score for earnings quality."
+      - name: score_growth
+        description: "Score for earnings growth."

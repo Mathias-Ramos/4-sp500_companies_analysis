@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: marts_financials
+    description: "Mart exposing yearly income statement figures per company."
+    columns:
+      - name: ticker
+        description: "The stock ticker symbol of the company."
+      - name: date
+        description: "The date of the fiscal period."
+      - name: fiscal_year
+        description: "The fiscal year derived from the period date."
+      - name: revenue
+        description: "Total revenue for the fiscal year."
+      - name: net_income
+        description: "Net income for the fiscal year."
+      - name: net_margin
+        description: "Net income divided by revenue."

@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: mart_peers
+    description: "Mart listing peer companies within the same sector as a selected company, with the KPIs used for peer comparison."
+    columns:
+      - name: ticker
+        description: "The stock ticker symbol of the selected company."
+      - name: peer_ticker
+        description: "The stock ticker symbol of the peer company."
+      - name: peer_name
+        description: "The name of the peer company."
+      - name: peer_industry
+        description: "The industry to which the peer company belongs."
+      - name: roic
+        description: "Return on invested capital of the peer company."
+      - name: eps_cagr_3y
+        description: "3-year compound annual growth rate of earnings per share of the peer company."
+      - name: fcf_bubble_size
+        description: "Free cash flow of the peer company, floored at zero, used as bubble size in charts."
+      - name: is_selected
+        description: "Boolean flag indicating whether the peer is the selected company itself."

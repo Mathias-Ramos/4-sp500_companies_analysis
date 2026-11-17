@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: mart_score_detailed
+    description: "Mart unpivoting the component scores from int_score into one row per ticker and score category."
+    columns:
+      - name: ticker
+        description: "The stock ticker symbol of the company."
+      - name: score_cat
+        description: "The score category ('P/E', 'Net debt', 'ROIC', 'Earnings', 'Growth', 'Technical', 'General')."
+      - name: score
+        description: "The score value for the given category."

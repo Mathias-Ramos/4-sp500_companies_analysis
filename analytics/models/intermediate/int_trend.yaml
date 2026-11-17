@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: int_trend
+    description: "Intermediate model to compute the technical trend and a trend score based on the 50-week moving average."
+    columns:
+      - name: ticker
+        description: "The stock ticker symbol of the company."
+      - name: date
+        description: "The date of the trend calculation."
+      - name: close
+        description: "The closing price of the stock on the given date."
+      - name: moving_avg_50w
+        description: "The 50-week moving average of the stock price."
+      - name: trend
+        description: "The technical trend based on the 50-week moving average. It can be 'Bullish', 'Bearish', or 'Neutral'."
+      - name: consecutive_bearish_closes
+        description: "Number of consecutive closes below the previous close, ending on this date (0 if the last close was not bearish)."
+      - name: trend_score
+        description: "Trend score (0-100): initial 50, +30 if bullish, -10 per consecutive bearish close, +0-20 depending on proximity to the 50-week SMA. Floored at 0."

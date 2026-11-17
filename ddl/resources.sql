@@ -2,6 +2,7 @@ CREATE FILE FORMAT IF NOT EXISTS csv_format
   TYPE = 'CSV'
   FIELD_DELIMITER = ','
   SKIP_HEADER = 1
+  FIELD_OPTIONALLY_ENCLOSED_BY = '"'
   ERROR_ON_COLUMN_COUNT_MISMATCH = FALSE;
 
 CREATE OR REPLACE STAGE snowstage
@@ -18,9 +19,17 @@ CREDENTIALS = (
     AWS_SECRET_KEY = 'your_key_here'
 );
 
-COPY INTO PRICES_WEEKLY
+COPY INTO PRICES_DAILY
 FROM @snowstage
-FILES = ('prices_weekly.csv')
+FILES = ('prices_daily.csv')
+CREDENTIALS = (
+    AWS_KEY_ID = 'your_id_here',
+    AWS_SECRET_KEY = 'your_key_here'
+);
+
+COPY INTO METRICS
+FROM @snowstage
+FILES = ('metrics.csv')
 CREDENTIALS = (
     AWS_KEY_ID = 'your_id_here',
     AWS_SECRET_KEY = 'your_key_here'
@@ -53,6 +62,14 @@ CREDENTIALS = (
 COPY INTO ANALYST_ESTIMATES
 FROM @snowstage
 FILES = ('analyst_estimates.csv')
+CREDENTIALS = (
+    AWS_KEY_ID = 'your_id_here',
+    AWS_SECRET_KEY = 'your_key_here'
+);
+
+COPY INTO TTM_EPS
+FROM @snowstage
+FILES = ('ttm_eps.csv')
 CREDENTIALS = (
     AWS_KEY_ID = 'your_id_here',
     AWS_SECRET_KEY = 'your_key_here'

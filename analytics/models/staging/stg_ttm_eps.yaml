@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: stg_ttm_eps
+    description: "Trailing twelve-month earnings per share per company (one row per company and quarter-end date)."
+    columns:
+      - name: ticker
+        description: "Stock market symbol."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_companies')
+                field: ticker
+      - name: date
+        description: "Quarter-end date for the trailing twelve-month period."
+        data_tests:
+          - not_null
+      - name: ttm_eps
+        description: "Trailing twelve-month diluted earnings per share (USD)."

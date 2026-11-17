@@ -1,8 +1,8 @@
 version: 2
 
 models:
-  - name: stg_prices_weekly
-    description: "Weekly stock prices merged with historical valuation measures (forward-filled from monthly/quarterly measure dates)."
+  - name: stg_metrics
+    description: "Historical valuation measures per company (one row per measure date)."
     columns:
       - name: ticker
         description: "Stock market symbol."
@@ -13,11 +13,9 @@ models:
                 to: ref('stg_companies')
                 field: ticker
       - name: date
-        description: "Week start date."
+        description: "Valuation measure date."
         data_tests:
           - not_null
-      - name: rounded_close
-        description: "Split- and dividend-adjusted closing price (USD)."
       - name: market_cap
         description: "Market capitalization (USD)."
       - name: enterprise_value

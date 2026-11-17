@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: mart_score
+    description: "Mart exposing key performance indicators and the overall investment score for S&P 500 companies."
+    columns:
+      - name: ticker
+        description: "The stock ticker symbol of the company."
+      - name: name
+        description: "The name of the company."
+      - name: sector
+        description: "The sector to which the company belongs."
+      - name: industry
+        description: "The industry to which the company belongs."
+      - name: trailing_pe
+        description: "Trailing price-to-earnings ratio."
+      - name: forward_pe
+        description: "Forward price-to-earnings ratio."
+      - name: avg_industry_trail_pe
+        description: "Average trailing P/E ratio across the company's industry."
+      - name: avg_industry_forw_pe
+        description: "Average forward P/E ratio across the company's industry."
+      - name: net_debt_to_ebitda_ratio
+        description: "Net debt to EBITDA ratio."
+      - name: roic
+        description: "Return on invested capital."
+      - name: free_cash_flow
+        description: "Free cash flow."
+      - name: fcf_to_net_income
+        description: "Free cash flow to net income ratio."
+      - name: eps_cagr_3y
+        description: "3-year compound annual growth rate of earnings per share."
+      - name: score
+        description: "Overall investment score based on valuation, financial strength, technical trend, earnings quality, and earnings growth."
+      - name: rank_in_industry
+        description: "Rank of the company by investment score within its industry."
+      - name: companies_in_industry
+        description: "Total number of companies in the company's industry."

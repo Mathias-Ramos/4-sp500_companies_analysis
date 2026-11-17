@@ -27,7 +27,4 @@ models:
           - accepted_values:
               arguments:
                 values: ['USD']
-      - name: market_cap
-        description: "Current market capitalization (USD)."
-      - name: ttm_ebitda
-        description: "Trailing twelve months EBITDA (USD)."
+

@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: int_kpis
+    description: "Intermediate model to compute key performance indicators (KPIs) for S&P 500 companies."
+    columns:
+      - name: ticker
+        description: "The stock ticker symbol of the company."
+      - name: name
+        description: "The name of the company."
+      - name: sector
+        description: "The sector to which the company belongs."
+      - name: industry
+        description: "The industry to which the company belongs."
+      - name: trailing_pe
+        description: "Trailing P/E ratio of the company."
+      - name: forward_pe
+        description: "Forward P/E ratio of the company."
+      - name: avg_industry_trail_pe
+        description: "Average trailing P/E ratio for the industry of the company."
+      - name: avg_industry_forw_pe
+        description: "Average forward P/E ratio for the industry of the company."
+      - name: net_debt_to_ebitda_ratio
+        description: "Net debt to EBITDA ratio, indicating financial leverage."
+      - name: roic
+        description: "Return on Invested Capital (ROIC), calculated as NOPAT divided by invested capital."
+      - name: free_cash_flow
+        description: "Free cash flow, calculated as operating cash flow plus capital expenditure."
+      - name: fcf_to_net_income
+        description: "Ratio of free cash flow to net income."
+      - name: eps_cagr_3y
+        description: "Earnings per share (EPS) compound annual growth rate over 3 years. NULL when either the starting or ending EPS is negative or zero."

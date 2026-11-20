@@ -229,11 +229,11 @@ cd analytics && dbt build
 
 **Analytics Engineer** — je conçois des pipelines de données fiables et des modèles analytiques qui transforment des données brutes en décisions.
 
-Vous pouvez retrouver d'autres projets dans mon **[Portfolio](https://github.com/nicolas-martin)**.
+Vous pouvez retrouver d'autres projets dans mon **[Portfolio](https://github.com/Mathias-Ramos)**.
 
 <p>
-  <a href="https://www.linkedin.com/in/nicolas-martin">LinkedIn</a> •
-  <a href="mailto:contact@example.com">Email</a>
+  <a href="https://www.linkedin.com/in/mathiasramos">LinkedIn</a> •
+  <a href="mailto:mathias.ramos@outlook.fr">Email</a>
 </p>
 
 ---
@@ -452,9 +452,9 @@ cd analytics && dbt build
 
 **Analytics Engineer** — I design reliable data pipelines and analytical models that turn raw data into decisions.
 
-More projects are available in my **[Portfolio](https://github.com/nicolas-martin)**.
+More projects are available in my **[Portfolio](https://github.com/Mathias-Ramos)**.
 
 <p>
-  <a href="https://www.linkedin.com/in/nicolas-martin">LinkedIn</a> •
-  <a href="mailto:contact@example.com">Email</a>
+  <a href="https://www.linkedin.com/in/mathiasramos">LinkedIn</a> •
+  <a href="mailto:mathias.ramos@outlook.fr">Email</a>
 </p>

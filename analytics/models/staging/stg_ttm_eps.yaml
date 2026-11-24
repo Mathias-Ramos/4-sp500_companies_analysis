@@ -3,6 +3,10 @@ version: 2
 models:
   - name: stg_ttm_eps
     description: "Trailing twelve-month earnings per share per company (one row per company and quarter-end date)."
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [ticker, date]
     columns:
       - name: ticker
         description: "Stock market symbol."

@@ -3,10 +3,30 @@ version: 2
 models:
   - name: mart_score_detailed
     description: "Mart unpivoting the component scores from int_score into one row per ticker and score category."
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [ticker, score_cat]
     columns:
       - name: ticker
         description: "The stock ticker symbol of the company."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_companies')
+                field: ticker
       - name: score_cat
         description: "The score category ('P/E', 'Net debt', 'ROIC', 'Earnings', 'Growth', 'Technical', 'General')."
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['P/E', 'Net debt', 'ROIC', 'Earnings', 'Growth', 'Technical', 'General']
       - name: score
         description: "The score value for the given category."
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+                inclusive: true

@@ -6,6 +6,13 @@ models:
     columns:
       - name: ticker
         description: "The stock ticker symbol of the company."
+        data_tests:
+          - not_null
+          - unique
+          - relationships:
+              arguments:
+                to: ref('stg_companies')
+                field: ticker
       - name: name
         description: "The name of the company."
       - name: sector
@@ -14,19 +21,73 @@ models:
         description: "The industry to which the company belongs."
       - name: investment_score
         description: "Overall investment score based on valuation, financial strength, technical trend, earnings quality, and earnings growth."
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+                inclusive: true
       - name: score_trailing_pe
         description: "Score for trailing P/E ratio."
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+                inclusive: true
       - name: score_forward_pe
         description: "Score for forward P/E ratio."
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+                inclusive: true
       - name: score_pe
         description: "Combined P/E score, the average of score_trailing_pe and score_forward_pe."
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+                inclusive: true
       - name: score_trend
         description: "Score for technical trend (0-100), taken from int_trend.trend_score on the latest date."
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+                inclusive: true
       - name: score_net_debt
         description: "Score for net debt to EBITDA ratio."
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+                inclusive: true
       - name: score_roic
         description: "Score for return on invested capital."
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+                inclusive: true
       - name: score_earnings_quality
         description: "Score for earnings quality."
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+                inclusive: true
       - name: score_growth
         description: "Score for earnings growth."
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+                inclusive: true

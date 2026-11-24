@@ -3,6 +3,10 @@ version: 2
 models:
   - name: stg_analyst_estimates
     description: "One row per company and future period with analyst EPS estimates, revenue estimates, EPS estimate trend and revisions."
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [ticker, period]
     columns:
       - name: ticker
         description: "Stock market symbol."

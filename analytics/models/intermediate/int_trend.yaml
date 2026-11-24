@@ -3,18 +3,46 @@ version: 2
 models:
   - name: int_trend
     description: "Intermediate model to compute the technical trend and a trend score based on the 50-week moving average."
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [ticker, date]
     columns:
       - name: ticker
         description: "The stock ticker symbol of the company."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_companies')
+                field: ticker
       - name: date
         description: "The date of the trend calculation."
+        data_tests:
+          - not_null
       - name: close
         description: "The closing price of the stock on the given date."
       - name: moving_avg_50w
         description: "The 50-week moving average of the stock price."
       - name: trend
         description: "The technical trend based on the 50-week moving average. It can be 'Bullish', 'Bearish', or 'Neutral'."
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['Bullish', 'Bearish', 'Neutral']
       - name: consecutive_bearish_closes
         description: "Number of consecutive closes below the previous close, ending on this date (0 if the last close was not bearish)."
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                inclusive: true
       - name: trend_score
         description: "Trend score (0-100): initial 50, +30 if bullish, -10 per consecutive bearish close, +0-20 depending on proximity to the 50-week SMA. Floored at 0."
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+                inclusive: true

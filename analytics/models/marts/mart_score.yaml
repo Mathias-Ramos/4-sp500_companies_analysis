@@ -6,6 +6,13 @@ models:
     columns:
       - name: ticker
         description: "The stock ticker symbol of the company."
+        data_tests:
+          - not_null
+          - unique
+          - relationships:
+              arguments:
+                to: ref('stg_companies')
+                field: ticker
       - name: name
         description: "The name of the company."
       - name: sector
@@ -32,7 +39,23 @@ models:
         description: "3-year compound annual growth rate of earnings per share."
       - name: score
         description: "Overall investment score based on valuation, financial strength, technical trend, earnings quality, and earnings growth."
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+                inclusive: true
       - name: rank_in_industry
         description: "Rank of the company by investment score within its industry."
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 1
+                inclusive: true
       - name: companies_in_industry
         description: "Total number of companies in the company's industry."
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 1
+                inclusive: true

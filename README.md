@@ -31,6 +31,8 @@
 
 > ⚠️ **Avertissement** : ce projet est un exercice d'analytics engineering à but éducatif et démonstratif. Il ne constitue **pas un conseil en investissement** et ne doit pas être utilisé comme base pour des décisions d'investissement réelles. Aucune garantie n'est donnée sur l'exactitude ou la complétude des données.
 
+  <img src="docs/power_bi_dashboard.png">
+
 ## 🎯 Contexte & objectif
 
 Évaluer ~500 entreprises cotées à la main n'est ni fiable ni reproductible : chaque investisseur regarde quelques ratios isolés, sans cadre de comparaison homogène au sein d'une même industrie.
@@ -166,6 +168,8 @@ Le dashboard permet l'analyse d'une entreprise à la fois, dans son contexte d'i
 
 Lecture type : une entreprise au **ROIC élevé et à l'EPS CAGR soutenue** se positionne en haut à droite du nuage de pairs — une combinaison rare et valorisée ; un **score global moyen mais une catégorie « Growth » élevée** invite à creuser le potentiel spécifique.
 
+  <img src="docs/power_bi_dashboard.png">
+
 ## 📁 Structure du répertoire
 
 ```text
@@ -227,11 +231,11 @@ cd analytics && dbt build
 
 **Analytics Engineer** — je conçois des pipelines de données fiables et des modèles analytiques qui transforment des données brutes en décisions.
 
-Vous pouvez retrouver d'autres projets dans mon **[Portfolio](https://github.com/nicolas-martin)**.
+Vous pouvez retrouver d'autres projets dans mon **[Portfolio](https://github.com/Mathias-Ramos)**.
 
 <p>
-  <a href="https://www.linkedin.com/in/nicolas-martin">LinkedIn</a> •
-  <a href="mailto:contact@example.com">Email</a>
+  <a href="https://www.linkedin.com/in/mathiasramos">LinkedIn</a> •
+  <a href="mailto:mathias.ramos@outlook.fr">Email</a>
 </p>
 
 ---
@@ -251,6 +255,8 @@ Vous pouvez retrouver d'autres projets dans mon **[Portfolio](https://github.com
 </p>
 
 > ⚠️ **Disclaimer**: this project is an educational, demonstration-oriented analytics engineering exercise. It does **not constitute investment advice** and must not be used as a basis for real investment decisions. No guarantee is given regarding the accuracy or completeness of the data.
+
+  <img src="docs/power_bi_dashboard.png">
 
 ## 🎯 Context & objective
 
@@ -388,6 +394,8 @@ The dashboard analyzes one company at a time, within its industry context:
 
 Typical read: a company with **high ROIC and sustained EPS CAGR** sits in the top-right of the peer scatter — a rare and rewarded combination; an **average overall score but a high "Growth" category** invites digging into company-specific potential.
 
+  <img src="docs/power_bi_dashboard.png">
+
 ## 📁 Repository structure
 
 ```text
@@ -449,9 +457,9 @@ cd analytics && dbt build
 
 **Analytics Engineer** — I design reliable data pipelines and analytical models that turn raw data into decisions.
 
-More projects are available in my **[Portfolio](https://github.com/nicolas-martin)**.
+More projects are available in my **[Portfolio](https://github.com/Mathias-Ramos)**.
 
 <p>
-  <a href="https://www.linkedin.com/in/nicolas-martin">LinkedIn</a> •
-  <a href="mailto:contact@example.com">Email</a>
+  <a href="https://www.linkedin.com/in/mathiasramos">LinkedIn</a> •
+  <a href="mailto:mathias.ramos@outlook.fr">Email</a>
 </p>

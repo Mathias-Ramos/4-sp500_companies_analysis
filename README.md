@@ -47,18 +47,11 @@ Objectif métier : répondre à *« où se situe cette entreprise par rapport à
 
 ## ⚡ Résultats clés
 
-- **Scoring multi-facteurs** : chaque KPI est converti en score 0–100 par rang centile, puis agrégé avec des pondérations explicites (croissance, ROIC, dette, P/E, momentum technique).
-- **Comparaison relative, pas absolue** : les P/E sont normalisés par la **médiane de l'industrie**, rendant les scores comparables entre secteurs dissemblables.
-- **Vision instantanée par entreprise** : score global, rang dans l'industrie, détail des forces/faiblesses par catégorie, benchmark peers.
-- **Reproductibilité complète** : de la collecte Python au dashboard, chaque étape est versionnée et rejouable.
+Un score d'investissement unique sur 100 pour évaluer, comparer et classer les entreprises du S&P 500 selon leur valorisation, leur momentum, leur solidité financière, leur rentabilité et leur croissance.
 
-| Capacité | Décision supportée |
-|---|---|
-| **Score d'investissement 0–100** | Cribler rapidement l'univers S&P 500 et prioriser les entreprises à analyser. |
-| **Détail du score par catégorie** (P/E, ROIC, dette, croissance…) | Identifier précisément ce qui valorise ou pénalise une entreprise. |
-| **P/E vs médiane de l'industrie** | Distinguer une entreprise chère d'une industrie intrinsèquement chère. |
-| **Comparaison peers (ROIC vs EPS CAGR)** | Situer l'entreprise dans son écosystème concurrentiel. |
-| **Tendance technique (SMA 50 semaines)** | Intégrer le momentum de marché à une analyse dominée par les fondamentaux. |
+- **Scoring multi-facteurs** : agrégation de KPIs financiers et techniques via des percentiles pondérés.
+- **Comparabilité sectorielle** : valorisations normalisées par rapport à la médiane de chaque industrie.
+- **Aide à la décision** : score global et décomposition par catégorie pour identifier les forces et faiblesses de chaque entreprise.
 
 ## 🧰 Stack technique
 
@@ -150,26 +143,6 @@ Le score final est la combinaison pondérée :
 
 *(pondérations ajustables dans `int_score.sql` ; les comparaisons de P/E sont relatives à l'industrie, pas en valeur absolue.)*
 
-## 📊 Tableau de bord Power BI
-
-Le dashboard permet l'analyse d'une entreprise à la fois, dans son contexte d'industrie :
-
-| # | Visuel | Contenu |
-|---|---|---|
-| 1 | **Slicers** (Sector, Industry, Ticker) | Filtre global de la page ; sélection d'un ticker pour focaliser l'analyse |
-| 2 | **Carte** | Nom de l'entreprise sélectionnée |
-| 3 | **Jauge** | Score d'investissement global (0–100) |
-| 4 | **Carte KPI** | Rang de l'entreprise dans son industrie |
-| 5 | **Carte KPI + référence** | Trailing P/E et écart relatif vs médiane de l'industrie |
-| 6 | **Combo chart** | Net margin et Revenue par exercice : croissance accompagnée ou non de rentabilité |
-| 7 | **Barres horizontales** | Score détaillé par catégorie : forces et faiblesses |
-| 8 | **Nuage de points** | ROIC vs EPS CAGR (3Y) des pairs, taille = Free Cash Flow |
-| 9 | **Table** | Comparaison du score avec les concurrents + moyenne des pairs |
-
-Lecture type : une entreprise au **ROIC élevé et à l'EPS CAGR soutenue** se positionne en haut à droite du nuage de pairs — une combinaison rare et valorisée ; un **score global moyen mais une catégorie « Growth » élevée** invite à creuser le potentiel spécifique.
-
-  <img src="docs/power_bi_dashboard.png">
-
 ## 📁 Structure du répertoire
 
 ```text
@@ -229,7 +202,7 @@ cd analytics && dbt build
 
 ## 👋 À propos de moi
 
-**Analytics Engineer** — je conçois des pipelines de données fiables et des modèles analytiques qui transforment des données brutes en décisions.
+**Analytics Engineer**, je conçois des pipelines de données fiables et des modèles analytiques qui transforment des données brutes en décisions.
 
 Vous pouvez retrouver d'autres projets dans mon **[Portfolio](https://github.com/Mathias-Ramos)**.
 
@@ -272,18 +245,11 @@ Business goal: answer *"where does this company stand versus its peers, and on w
 
 ## ⚡ Key results
 
-- **Multi-factor scoring**: each KPI is converted into a 0–100 score using percentile ranking, then aggregated with explicit weights (growth, ROIC, debt, P/E, technical momentum).
-- **Relative, not absolute comparison**: P/E ratios are normalized against the **industry median**, making scores comparable across dissimilar sectors.
-- **One-company snapshot**: overall score, industry rank, category-level strengths/weaknesses, peer benchmark.
-- **Full reproducibility**: from Python collection to dashboard, every step is versioned and replayable.
+A single investment score (0–100) to evaluate, compare and rank S&P 500 companies based on valuation, momentum, financial strength, profitability and growth.
 
-| Capability | Supported decision |
-|---|---|
-| **0–100 investment score** | Quickly screen the S&P 500 universe and prioritize companies for deeper analysis. |
-| **Score breakdown by category** (P/E, ROIC, debt, growth…) | Pinpoint exactly what drives or drags a company's valuation. |
-| **P/E vs industry median** | Distinguish an expensive company from an intrinsically expensive industry. |
-| **Peer comparison (ROIC vs EPS CAGR)** | Position the company within its competitive landscape. |
-| **Technical trend (50-week SMA)** | Factor market momentum into an analysis otherwise dominated by fundamentals. |
+- **Multi-factor scoring**: weighted aggregation of financial and technical KPIs using percentile ranks.
+- **Industry-relative valuation**: P/E ratios normalized against industry medians.
+- **Decision support**: overall score and category breakdown to identify each company's strengths and weaknesses.
 
 ## 🧰 Tech stack
 
@@ -376,25 +342,6 @@ The final score is the weighted combination:
 
 *(weights are adjustable in `int_score.sql`; P/E comparisons are relative to the industry, not absolute.)*
 
-## 📊 Power BI dashboard
-
-The dashboard analyzes one company at a time, within its industry context:
-
-| # | Visual | Content |
-|---|---|---|
-| 1 | **Slicers** (Sector, Industry, Ticker) | Page-wide filter; select a ticker to focus the analysis |
-| 2 | **Card** | Selected company name |
-| 3 | **Gauge** | Overall investment score (0–100) |
-| 4 | **KPI card** | Company rank within its industry |
-| 5 | **KPI card + reference label** | Trailing P/E and relative gap vs industry median |
-| 6 | **Combo chart** | Net margin and Revenue by fiscal year: growth with or without profitability |
-| 7 | **Horizontal bars** | Score breakdown by category: strengths and weaknesses |
-| 8 | **Scatter plot** | Peers' ROIC vs EPS CAGR (3Y), bubble size = Free Cash Flow |
-| 9 | **Table** | Score comparison against competitors + peer average |
-
-Typical read: a company with **high ROIC and sustained EPS CAGR** sits in the top-right of the peer scatter — a rare and rewarded combination; an **average overall score but a high "Growth" category** invites digging into company-specific potential.
-
-  <img src="docs/power_bi_dashboard.png">
 
 ## 📁 Repository structure
 
@@ -455,7 +402,7 @@ cd analytics && dbt build
 
 ## 👋 About me
 
-**Analytics Engineer** — I design reliable data pipelines and analytical models that turn raw data into decisions.
+**Analytics Engineer**, I design reliable data pipelines and analytical models that turn raw data into decisions.
 
 More projects are available in my **[Portfolio](https://github.com/Mathias-Ramos)**.
 
